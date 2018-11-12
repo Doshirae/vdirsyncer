@@ -59,7 +59,7 @@ class JobFailed(RuntimeError):
     pass
 
 
-def handle_cli_error(status_name=None, e=None):
+def handle_cli_error(status_name=None, status_dir=None, e=None):
     '''
     Print a useful error message for the current exception.
 
@@ -80,9 +80,10 @@ def handle_cli_error(status_name=None, e=None):
             'want to delete ALL entries on BOTH sides, then use '
             '`vdirsyncer sync --force-delete {status_name}`. '
             'Otherwise delete the files for {status_name} in your status '
-            'directory.'.format(
+            'directory (currently {status_dir}).'.format(
                 name=e.empty_storage.instance_name,
-                status_name=status_name
+                status_name=status_name,
+                status_dir=status_dir
             )
         )
     except PartialSync as e:

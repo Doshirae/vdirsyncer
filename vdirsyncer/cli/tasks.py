@@ -57,7 +57,7 @@ def sync_collection(wq, collection, general, force_delete):
         def error_callback(e):
             nonlocal sync_failed
             sync_failed = True
-            handle_cli_error(status_name, e)
+            handle_cli_error(status_name, general['status_path'], e)
 
         with manage_sync_status(general['status_path'], pair.name,
                                 collection.name) as status:
@@ -74,7 +74,7 @@ def sync_collection(wq, collection, general, force_delete):
     except JobFailed:
         raise
     except BaseException:
-        handle_cli_error(status_name)
+        handle_cli_error(status_name, general['status_path'])
         raise JobFailed()
 
 
